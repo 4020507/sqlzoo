@@ -45,3 +45,32 @@ select title
 from movie join casting on (movie.id = casting.movieid)
 join actor on (casting.actorid = actor.id)
 where actor.name = 'Harrison Ford'
+
+//9
+select title
+from movie join casting on (movie.id = casting.movieid)
+join actor on (casting.actorid = actor.id)
+where actor.name = 'Harrison Ford' and casting.ord != 1
+
+//10
+select movie.title, actor.name
+from movie join casting on (movie.id = casting.movieid)
+join actor on (casting.actorid=actor.id)
+where movie.yr = 1962 and casting.ord = 1
+
+//11
+SELECT yr,COUNT(title) FROM
+  movie JOIN casting ON movie.id=movieid
+        JOIN actor   ON actorid=actor.id
+WHERE name='Doris Day'
+GROUP BY yr
+HAVING COUNT(title) > 1
+
+//12 *
+SELECT title,actor.name FROM movie
+join casting on (movie.id=casting.movieid)
+join actor on (actor.id = casting.actorid and ord=1)
+where movie.id  
+in (select casting.movieid from casting
+where actorid in (select id from actor where name='Julie Andrews'))
+
