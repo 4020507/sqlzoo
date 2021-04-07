@@ -74,3 +74,31 @@ where movie.id
 in (select casting.movieid from casting
 where actorid in (select id from actor where name='Julie Andrews'))
 
+//13 *
+select name
+from actor join casting on actor.id = casting.actorid
+where ord = 1
+group by name
+having count(ord)>=15
+order by name asc
+                
+//14
+select title,count(actorid)
+from movie 
+join casting on movieid = movie.id
+join actor on casting.actorid = actor.id
+where yr = 1978
+group by title
+order by count(actorid) desc, title
+
+//15
+select name
+from actor
+join casting on casting.actorid = actor.id
+join movie on movie.id = casting.movieid
+where actor.name != 'Art Garfunkel' and movie.id =
+any(select movie.id
+from movie
+join casting on casting.movieid = movie.id
+join actor on actor.id = casting.actorid
+where actor.name = 'Art Garfunkel')  
